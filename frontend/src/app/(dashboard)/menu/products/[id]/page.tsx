@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/axios';
 import { trimStrings } from '@/lib/sanitize';
@@ -64,8 +64,10 @@ const EMPTY_FORM = {
   track_inventory: false,
 };
 
-export default function ProductBuilderPage({ params }: { params: { id: string } }) {
-  const isNew = params.id === 'new';
+export default function ProductBuilderPage() {
+  const params = useParams<{ id: string }>();
+  const productId = params?.id ?? '';
+  const isNew = productId === 'new';
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -78,8 +80,8 @@ export default function ProductBuilderPage({ params }: { params: { id: string } 
   });
 
   const { data: product } = useQuery<Product>({
-    queryKey: ['products', params.id],
-    queryFn: async () => (await api.get(`/products/${params.id}`)).data.data,
+    queryKey: ['products', productId],
+    queryFn: async () => (await api.get(`/products/${productId}`)).data.data,
     enabled: !isNew,
   });
 
@@ -105,7 +107,7 @@ export default function ProductBuilderPage({ params }: { params: { id: string } 
   const saveProductMutation = useMutation({
     mutationFn: async (data: typeof EMPTY_FORM) => {
       if (isNew) return api.post('/products', data);
-      return api.patch(`/products/${params.id}`, data);
+      return api.patch(`/products/${productId}`, data);
     },
     onSuccess: (res) => {
       queryClient.invalidateQueries({ queryKey: ['products'] });

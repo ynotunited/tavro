@@ -21,8 +21,14 @@ class ProductController extends Controller
         return $this->success($products);
     }
 
-    public function show(Request $request, Product $product)
+    public function show(Request $request, string $productId)
     {
+        $product = Product::find($productId);
+
+        if (! $product) {
+            abort(404);
+        }
+
         $this->authorizeOrg($product, $request);
 
         return $this->success(
@@ -60,8 +66,14 @@ class ProductController extends Controller
         return $this->success($product->load('category'), 'Product created', 201);
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request, string $productId)
     {
+        $product = Product::find($productId);
+
+        if (! $product) {
+            abort(404);
+        }
+
         $this->authorizeOrg($product, $request);
 
         $validated = $request->validate([
@@ -93,16 +105,28 @@ class ProductController extends Controller
         return $this->success($product->load(['category', 'variants']), 'Product updated');
     }
 
-    public function toggleAvailability(Request $request, Product $product)
+    public function toggleAvailability(Request $request, string $productId)
     {
+        $product = Product::find($productId);
+
+        if (! $product) {
+            abort(404);
+        }
+
         $this->authorizeOrg($product, $request);
         $product->update(['is_available' => !$product->is_available]);
 
         return $this->success(['is_available' => $product->is_available]);
     }
 
-    public function destroy(Request $request, Product $product)
+    public function destroy(Request $request, string $productId)
     {
+        $product = Product::find($productId);
+
+        if (! $product) {
+            abort(404);
+        }
+
         $this->authorizeOrg($product, $request);
         $product->delete();
 

@@ -363,6 +363,20 @@ class AuthController extends Controller
         });
 
         $user = User::where('email', $email)->first();
+
+        // Auto-populate the new restaurant with the Nigerian food menu so the
+        // owner can toggle what they sell and set their own prices instead of
+        // adding everything from scratch.
+        try {
+            app(\App\Services\CatalogImportService::class)->importType($org->id, 'food');
+        } catch (\Throwable $e) {
+            Log::channel('auth')->warning('Failed to auto-import Nigerian menu', [
+                'user_id' => $user->id,
+                'org_id'  => $org->id,
+                'error'   => $e->getMessage(),
+            ]);
+        }
+
         $this->sendVerificationMail($user);
 
         Log::channel('auth')->info('User registered', [

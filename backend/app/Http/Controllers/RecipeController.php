@@ -15,8 +15,14 @@ class RecipeController extends Controller
     /**
      * Save (or replace) a recipe for a product or variant.
      */
-    public function store(Request $request, Product $product)
+    public function store(Request $request, string $productId)
     {
+        $product = Product::find($productId);
+
+        if (! $product) {
+            abort(404);
+        }
+
         if ($product->organization_id !== $request->user()->organization_id) {
             abort(403);
         }
@@ -54,8 +60,14 @@ class RecipeController extends Controller
     /**
      * Get the active recipe for a product.
      */
-    public function show(Request $request, Product $product)
+    public function show(Request $request, string $productId)
     {
+        $product = Product::find($productId);
+
+        if (! $product) {
+            abort(404);
+        }
+
         if ($product->organization_id !== $request->user()->organization_id) {
             abort(403);
         }

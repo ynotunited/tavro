@@ -122,6 +122,7 @@ Route::middleware(['auth:sanctum', 'throttle:api', 'ensure.user.active', 'signat
     Route::get('/catalog/search', [CatalogController::class, 'search']);
     Route::get('/catalog/categories', [CatalogController::class, 'categories']);
     Route::get('/catalog/packs', [CatalogController::class, 'packs']);
+    Route::get('/catalog/packs/{packId}/products', [CatalogController::class, 'packProducts']);
     Route::post('/catalog/items/{catalogProductId}/add', [CatalogController::class, 'add']);
     Route::post('/catalog/packs/{packId}/apply', [CatalogController::class, 'apply']);
 

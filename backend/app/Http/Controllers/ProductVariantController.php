@@ -11,8 +11,14 @@ class ProductVariantController extends Controller
 {
     use ApiResponse;
 
-    public function store(Request $request, Product $product)
+    public function store(Request $request, string $productId)
     {
+        $product = Product::find($productId);
+
+        if (! $product) {
+            abort(404);
+        }
+
         $this->authorizeProduct($product, $request);
 
         $validated = $request->validate([
@@ -35,8 +41,20 @@ class ProductVariantController extends Controller
         return $this->success($product->fresh('variants'), 'Variants saved', 201);
     }
 
-    public function destroy(Request $request, Product $product, ProductVariant $variant)
+    public function destroy(Request $request, string $productId, string $variantId)
     {
+        $product = Product::find($productId);
+
+        if (! $product) {
+            abort(404);
+        }
+
+        $variant = ProductVariant::find($variantId);
+
+        if (! $variant) {
+            abort(404);
+        }
+
         $this->authorizeProduct($product, $request);
 
         if ($variant->product_id !== $product->id) {
