@@ -1,0 +1,209 @@
+@import "tailwindcss";
+
+:root {
+  /* Colors */
+  --color-brand-primary: #1F2937;
+  --color-brand-primary-dark: #111827;
+  --color-brand-primary-light: #374151;
+
+  --color-brand-secondary: #D97706;
+  --color-brand-secondary-dark: #B45309;
+  --color-brand-secondary-light: #FBBF24;
+
+  --color-brand-tertiary: #F5DEB3;
+
+  --color-neutral-50: #FAFAFA;
+  --color-neutral-100: #F9FAFB;
+  --color-neutral-200: #F3F4F6;
+  --color-neutral-300: #E5E7EB;
+  --color-neutral-400: #D1D5DB;
+  --color-neutral-500: #9CA3AF;
+  --color-neutral-600: #6B7280;
+  --color-neutral-700: #374151;
+  --color-neutral-900: #1F2937;
+
+  --color-background: #FAFAFA;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #F9FAFB;
+  --color-surface-tertiary: #F3F4F6;
+
+  --color-border-light: #F0F0F0;
+  --color-border: #E5E7EB;
+  --color-border-dark: #D4D4D8;
+
+  --color-text-primary: #1F2937;
+  --color-text-secondary: #6B7280;
+  --color-text-muted: #9CA3AF;
+  --color-text-inverse: #FAFAFA;
+
+  --color-success: #059669;
+  --color-warning: #F97316;
+  --color-error: #DC2626;
+  --color-info: #2563EB;
+  
+  --color-focus-ring: #D97706;
+
+  /* Typography (loaded via next/font in layout.tsx) */
+  --font-family-primary: var(--font-body), -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-family-display: var(--font-display), var(--font-family-primary);
+  --font-family-mono: var(--font-mono-code), ui-monospace, 'Courier New', monospace;
+
+  /* Spacing */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+
+  /* Border */
+  --border-radius-0: 0px;
+  --border-radius-sm: 2px;
+  --border-radius-md: 4px;
+  --border-radius-lg: 8px;
+
+  /* Component Colors */
+  --color-button-primary-bg: #D97706;
+  --color-button-primary-text: #1F2937;
+  --color-button-primary-hover: #B45309;
+  --color-button-primary-active: #92400E;
+  --color-button-primary-disabled: #D1D5DB;
+
+  --color-button-secondary-bg: #FFFFFF;
+  --color-button-secondary-border: #E5E7EB;
+  --color-button-secondary-text: #1F2937;
+  --color-button-secondary-hover: #F9FAFB;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #0F172A;
+    --color-surface: #1E293B;
+    --color-surface-secondary: #334155;
+
+    --color-text-primary: #F8FAFC;
+    --color-text-secondary: #CBD5E1;
+    --color-text-muted: #94A3B8;
+
+    /* Mobile Safe Area Insets */
+    --sait: env(safe-area-inset-top, 0px);
+    --sair: env(safe-area-inset-right, 0px);
+    --saib: env(safe-area-inset-bottom, 0px);
+    --sail: env(safe-area-inset-left, 0px);
+  }
+}
+
+@theme inline {
+  --color-background: #FAFAFA;
+  --color-foreground: #1F2937;
+
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #F9FAFB;
+  --color-surface-tertiary: #F3F4F6;
+  --color-border: #E5E7EB;
+  --color-border-light: #F0F0F0;
+  --color-border-dark: #D4D4D8;
+
+  --color-text-primary: #1F2937;
+  --color-text-secondary: #6B7280;
+  --color-text-muted: #9CA3AF;
+  --color-text-inverse: #FAFAFA;
+
+  --color-primary-DEFAULT: var(--color-brand-primary);
+  --color-primary-dark: var(--color-brand-primary-dark);
+  --color-primary-light: var(--color-brand-primary-light);
+  --color-primary: #1F2937;
+
+  --color-amber: #D97706;
+  --color-amber-light: #FBBF24;
+  --color-amber-dark: #B45309;
+
+  --color-success: #059669;
+  --color-warning: #F97316;
+  --color-error: #DC2626;
+  --color-info: #2563EB;
+
+  --color-charcoal-50: #FAFAFA;
+  --color-charcoal-100: #F9FAFB;
+  --color-charcoal-200: #F3F4F6;
+  --color-charcoal-300: #D1D5DB;
+  --color-charcoal-400: #9CA3AF;
+  --color-charcoal-500: #6B7280;
+  --color-charcoal-600: #4B5563;
+  --color-charcoal-700: #374151;
+  --color-charcoal-800: #1F2937;
+  --color-charcoal-900: #111827;
+  --color-charcoal-950: #030712;
+  --color-charcoal: #1F2937;
+
+  --color-amber-50: #FFFBEB;
+  --color-amber-100: #FEF3C7;
+  --color-amber-200: #FDE68A;
+  --color-amber-300: #FCD34D;
+  --color-amber-400: #FBBF24;
+  --color-amber-500: #F59E0B;
+  --color-amber-600: #D97706;
+  --color-amber-700: #B45309;
+  --color-amber-800: #92400E;
+  --color-amber-900: #78350F;
+  --color-amber-950: #451A03;
+
+  --font-sans: var(--font-family-primary);
+  --font-display: var(--font-family-display);
+  --font-mono: var(--font-family-mono);
+
+  --spacing-1: var(--spacing-1);
+  --spacing-2: var(--spacing-2);
+  --spacing-3: var(--spacing-3);
+  --spacing-4: var(--spacing-4);
+  --spacing-5: var(--spacing-5);
+  --spacing-6: var(--spacing-6);
+  --spacing-8: var(--spacing-8);
+  --spacing-10: var(--spacing-10);
+  --spacing-12: var(--spacing-12);
+}
+
+/* Base Body */
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-primary);
+  font-feature-settings: "cv11" 1, "ss01" 1;
+}
+
+/* Base Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: #1F2937;
+  font-family: var(--font-family-display);
+  letter-spacing: -0.01em;
+}
+
+/* Admin (dev-company) panel: the content surface is always light, so force
+   headings and body text dark regardless of prefers-color-scheme. The global
+   heading rule above flips to white in dark mode, which would make titles
+   invisible on this always-light surface. */
+.admin-content {
+  background-color: #F9FAFB;
+  color: #1F2937;
+}
+.admin-content h1,
+.admin-content h2,
+.admin-content h3,
+.admin-content h4,
+.admin-content h5,
+.admin-content h6 {
+  color: #1F2937;
+}
+
+/* User (tenant) dashboard content: the app's dashboards are light-theme with
+   white cards, but prefers-color-scheme: dark flips the body background dark.
+   Pin the tenant content surface to a light tone so dark text/headings stay
+   visible in both modes. (POS/Bar/Kitchen set their own full-bleed dark
+   containers on top, so they are unaffected.) */
+.tenant-content {
+  background-color: #F9FAFB;
+  color: #1F2937;
+}

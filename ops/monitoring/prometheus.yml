@@ -1,0 +1,19 @@
+# Prometheus scrape config for Tavro monitoring.
+# node_exporter runs with network_mode: host, so reference by host IP:9100.
+global:
+  scrape_interval: 30s
+  evaluation_interval: 30s
+
+scrape_configs:
+  # OS metrics from the node itself (node_exporter is network_mode: host)
+  - job_name: node
+    static_configs:
+      - targets: ["host.docker.internal:9100"]
+
+  # Pull the Laravel /up health endpoint as a metric (optional)
+  # Requires a blackbox exporter for HTTP probes; simple version below:
+  - job_name: tavro_api
+    metrics_path: /up
+    static_configs:
+      - targets: ["host.docker.internal:8000"]
+    scrape_timeout: 5s
