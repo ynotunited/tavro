@@ -38,6 +38,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Middleware\CheckSubscription;
 use App\Http\Middleware\TrackLoginFailures;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 // ─── Public routes ────────────────────────────────────────────────────────────
@@ -64,6 +65,15 @@ Route::middleware('throttle:verification')->post('/auth/email/verification/resen
 
 // Onboarding — rate-limited to prevent spam
 Route::middleware('throttle:organizations')->post('/organizations', [OrganizationController::class, 'store']);
+
+// ─── Realtime (Reverb) broadcast channel authorization ─────────────────────────
+// The frontend (src/lib/echo.ts) authorizes private channels by POSTing here
+// when opening a WebSocket. It carries the Sanctum bearer token; no HMAC body
+// signing is required for this handshake.
+Route::middleware(['auth:sanctum', 'ensure.user.active'])
+    ->post('/broadcasting/auth', function (\Illuminate\Http\Request $request) {
+        return \Illuminate\Support\Facades\Broadcast::auth($request);
+    });
 
 // ─── Authenticated routes ─────────────────────────────────────────────────────
 // signature.verify enforces HMAC request signing on every mutating call.

@@ -31,7 +31,9 @@ class DemoOrdersSeeder extends Seeder
             return;
         }
 
-        $branch = Branch::where('organization_id', $org->id)->first();
+        // Branch/Product/Table are tenant-scoped (fail closed without auth),
+        // so bypass the global scope and filter by organization_id explicitly.
+        $branch = Branch::withoutGlobalScopes()->where('organization_id', $org->id)->first();
         $owner  = User::where('email', 'owner@demo.tavro.ng')->first();
         $waiter = User::where('email', 'waiter@demo.tavro.ng')->first();
 
@@ -40,13 +42,13 @@ class DemoOrdersSeeder extends Seeder
             return;
         }
 
-        $products = Product::where('organization_id', $org->id)->orderBy('id')->get();
+        $products = Product::withoutGlobalScopes()->where('organization_id', $org->id)->orderBy('id')->get();
         if ($products->isEmpty()) {
             $this->command->warn('No demo products found. Run DemoSeeder first.');
             return;
         }
 
-        $tables = Table::where('organization_id', $org->id)->where('branch_id', $branch->id)->orderBy('id')->get();
+        $tables = Table::withoutGlobalScopes()->where('organization_id', $org->id)->where('branch_id', $branch->id)->orderBy('id')->get();
 
         // Remove any previously seeded demo orders for this org (idempotent re-run)
         Order::where('organization_id', $org->id)
